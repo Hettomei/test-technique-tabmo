@@ -1,0 +1,23 @@
+body {
+  background-color: #f9f9f9;
+}
+
+.shop-nav {
+  min-height: 500px;
+}
+
+.shop-nav ul {
+  margin: 1rem;
+}
+
+.header {
+  background-color: #d4d4ff;
+}
+
+.menu {
+  background-color: #e7e7ff;
+}
+
+.content {
+  background-color: #f9f9f9;
+}
