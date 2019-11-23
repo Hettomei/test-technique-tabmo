@@ -18,13 +18,37 @@ npm install
 npm start
 ```
 
+Open http://localhost:3000 to view it in the browser.
+
+# Choices
+
+## Axios :
+Because in case of 404, it throw an error. Fetch doesn't, we have t check status.
+
+## reactstrap :
+bootstrap is known since lot of year
+Enough to display
+
+## jest :
+Because was already configured
+
+## pokemon saved in a hash in store :
+Previous check : every names are unique
+so we can use it as key without loosing data
+
+# About pokeapi
+
+I choose to cache every data like if the server never add new data.
+To respect the doc :
+
+- fixed limit of 100 API requests per IP address per minute
+- we recommend caching data on your service.
+
 # Build
 
 ```
 npm run build
 ```
-
-Open http://localhost:3000 to view it in the browser.
 
 # Credits
 
