@@ -16,9 +16,10 @@ export function Shop() {
     <div>
       <h1>Pokemons</h1>
       {pokemons.map(pokemon => (
-        <p key={pokemon.name}>
-          {pokemon.name} {pokemon.url}
-        </p>
+        <ul key={pokemon.name}>
+          <li>{pokemon.name}</li>
+          <li>{pokemon.price}</li>
+        </ul>
       ))}
     </div>
   );
