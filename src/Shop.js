@@ -21,7 +21,9 @@ export function Shop() {
       <h1>Pokemons</h1>
       {pokemons.map(pokemon => (
         <ul key={pokemon.name}>
-          <li><Link to={`${URLS.details}/${pokemon.name}`}>{pokemon.name}</Link></li>
+          <li>
+            <Link to={`${URLS.details}/${pokemon.name}`}>{pokemon.name}</Link>
+          </li>
           <li>{pokemon.price}</li>
         </ul>
       ))}

@@ -50,6 +50,13 @@ To respect the doc :
 npm run build
 ```
 
+# TO DO
+
+- use i18next
+- save cart in localstorage
+- split code in folder
+
+
 # Credits
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

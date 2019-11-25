@@ -22,6 +22,8 @@ export async function getAll() {
   return request.data.results.map(addPrice);
 }
 
-export async function getPokemon() {
-  return { name: "bulbi", price: 55 };
+export async function getPokemon(name) {
+  const request = await axios.get(`${BASE_URL}/pokemon/${name}`);
+  // Merge request with species and color when this one is complete
+  return request.data;
 }
