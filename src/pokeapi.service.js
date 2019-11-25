@@ -21,3 +21,7 @@ export async function getAll() {
   });
   return request.data.results.map(addPrice);
 }
+
+export async function getPokemon() {
+  return { name: "bulbi", price: 55 };
+}

@@ -8,6 +8,7 @@ import { Page404 } from "./Page404";
 import { Header } from "./Header";
 import { MenuLinks } from "./MenuLinks";
 import { Shop } from "./Shop";
+import { Details } from "./Details";
 import { Cart } from "./Cart";
 
 import "./App.css";
@@ -31,6 +32,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={Shop} />
               <Route path={URLS.shop} exact component={Shop} />
+              <Route path={`${URLS.details}/:pokename`} component={Details} />
               <Route path={URLS.cart} exact component={Cart} />
               <Route component={Page404} />
             </Switch>
