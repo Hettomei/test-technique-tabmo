@@ -1,28 +1,30 @@
 /*
- * State will look like
+ * State will save price
+ * Easier when same pokemon has different price
+ * (let say, they can have different xp and so cost more)
     {
-      "bulbasaur": 3,
-      "pikachu": 10,
+      "bulbasaur": [30, 30],
+      "pikachu": [],
     }
  */
 
 export function cart(state = {}, action) {
   switch (action.type) {
     case "add-pokemon": {
-      const count = state[action.pokename] || 0;
+      const { name, price } = action.pokemon;
+      const prices = (state[name] || []).concat(price);
       return {
         ...state,
-        [action.pokename]: count + 1
+        [name]: prices
       };
     }
     case "remove-pokemon": {
-      const count = state[action.pokename] || 0;
-      if (count < 1) {
-        return state;
-      }
+      // It only works because every pokemon as same price
+      const { name } = action.pokemon;
+      const prices = (state[name] || []).slice(1);
       return {
         ...state,
-        [action.pokename]: count - 1
+        [name]: prices
       };
     }
     default:

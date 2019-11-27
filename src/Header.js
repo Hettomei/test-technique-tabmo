@@ -4,15 +4,23 @@ import { createSelector } from "reselect";
 
 import { Row, Col, Badge } from "reactstrap";
 
-const sum = (acc, n) => acc + n;
+const countTotal = (acc, prices) => acc + prices.length;
+const sumPrices = (acc, prices) => acc + prices.length * (prices[0] || 0);
 
 const selectTotalInCart = createSelector(
   state => state.cart,
-  cart => Object.values(cart).reduce(sum, 0)
+  cart => Object.values(cart).reduce(countTotal, 0)
+);
+
+const selectTotalPriceInCart = createSelector(
+  state => state.cart,
+  state => state.pokeapi,
+  (cart, pokemons) => Object.values(cart).reduce(sumPrices, 0)
 );
 
 export function Header() {
   const totalInCart = useSelector(selectTotalInCart);
+  const totalPrice = useSelector(selectTotalPriceInCart);
 
   return (
     <Row>
@@ -21,7 +29,7 @@ export function Header() {
       </Col>
       <Col xs="2">
         <Badge color="primary" pill>
-          in cart: {totalInCart}
+          {totalInCart} pokemons, {totalPrice} €
         </Badge>
       </Col>
     </Row>

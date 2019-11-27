@@ -45,7 +45,7 @@ export function Details() {
     <Row>
       <Col xs="7">
         <h1 className="pokemon-name">{pokemon.name.toUpperCase()}</h1>
-        <AddToCart pokename={pokemon.name} />
+        <AddToCart pokemon={pokemon} />
 
         <h2>Types</h2>
         <p>

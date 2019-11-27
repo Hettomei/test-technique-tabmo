@@ -24,7 +24,7 @@ export function Shop() {
             <Link to={`${URLS.details}/${pokemon.name}`}>{pokemon.name}</Link>
           </li>
           <li>{pokemon.price}</li>
-          <AddToCart pokename={pokemon.name} />
+          <AddToCart pokemon={pokemon} />
         </ul>
       ))}
     </div>
