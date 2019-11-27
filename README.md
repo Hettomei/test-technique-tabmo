@@ -55,6 +55,8 @@ npm run build
 - use i18next
 - save cart in localstorage
 - split code in folder
+- Use React.PropType or use Typescript
+- better code structure : end with Component / Service....
 
 
 # Credits

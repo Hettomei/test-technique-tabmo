@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 
 import { AddToCart } from "./AddToCart";
 
 import { URLS } from "./constants";
-import { getAll } from "./pokeapi.service";
+
+const selectPokemons = createSelector(
+  state => state.pokeapi,
+  pokemons => pokemons.slice(0, 10)
+);
 
 export function Shop() {
-  const [pokemons, setPokemons] = useState([]);
-
-  async function fetchPokemons() {
-    const all = await getAll();
-    setPokemons(all.slice(0, 10));
-  }
-
-  useEffect(() => {
-    fetchPokemons();
-  }, []);
+  const pokemons = useSelector(selectPokemons);
 
   return (
     <div>

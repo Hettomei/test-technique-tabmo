@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
 
 import { URLS } from "./constants";
@@ -11,9 +12,22 @@ import { Shop } from "./Shop";
 import { Details } from "./Details";
 import { Cart } from "./Cart";
 
+import { getAll } from "./pokeapi.service";
+
 import "./App.css";
 
 function App() {
+  const dispatch = useDispatch();
+
+  async function fetchPokemons() {
+    const pokemons = await getAll();
+    dispatch({ type: "fetch all pokemons", pokemons });
+  }
+
+  useEffect(() => {
+    fetchPokemons();
+  });
+
   return (
     <Router>
       <Container fluid>
