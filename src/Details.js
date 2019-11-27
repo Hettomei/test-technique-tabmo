@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col, Table } from "reactstrap";
 
+import { AddToCart } from "./AddToCart";
+
 import { getPokemon } from "./pokeapi.service";
 
 const WHITE_LIST = [
@@ -39,12 +41,11 @@ export function Details() {
     return null;
   }
 
-  console.log("ttiimm", pokemon);
-
   return (
     <Row>
       <Col xs="7">
         <h1 className="pokemon-name">{pokemon.name.toUpperCase()}</h1>
+        <AddToCart pokename={pokemon.name} />
 
         <h2>Types</h2>
         <p>
