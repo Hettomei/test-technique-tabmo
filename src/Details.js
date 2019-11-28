@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Row, Col, Table } from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Row, Col, Table, Spinner } from "reactstrap";
 
 import { AddToCart } from "./AddToCart";
 
 import { getPokemon } from "./pokeapi.service";
+import { selectPokemon, selectBasicInformation } from "./selectors/pokeapi";
 
 const WHITE_LIST = [
   "base_experience",
@@ -26,19 +29,31 @@ function simpleDetails(pokemon) {
 }
 
 export function Details() {
-  const [pokemon, setPokemon] = useState(null);
   const { pokename } = useParams();
+  const dispatch = useDispatch();
+  const pokemon = useSelector(state => selectPokemon(state, pokename));
+  const basicInformation = useSelector(state => selectBasicInformation(state, pokename));
 
   async function fetchPokemon(pokename) {
-    setPokemon(await getPokemon(pokename));
+    dispatch({
+      type: "add-pokemon-info",
+      ...(await getPokemon(pokename))
+    });
   }
 
   useEffect(() => {
-    fetchPokemon(pokename);
-  }, [pokename]);
+    pokemon.name && !basicInformation && fetchPokemon(pokename);
+  });
 
-  if (!pokemon) {
-    return null;
+  if (!basicInformation) {
+    return (
+      <Row>
+        <Col xs="7">
+          <h1 className="pokemon-name">{pokename.toUpperCase()}</h1>
+          <Spinner color="primary" />
+        </Col>
+      </Row>
+    );
   }
 
   return (
@@ -49,7 +64,7 @@ export function Details() {
 
         <h2>Types</h2>
         <p>
-          {pokemon.types
+          {basicInformation.types
             .map(({ type: { name } }) => name)
             .sort()
             .join(", ")}
@@ -57,7 +72,7 @@ export function Details() {
 
         <h2>Details</h2>
         <ul>
-          {simpleDetails(pokemon).map(([attr, data]) => (
+          {simpleDetails(basicInformation).map(([attr, data]) => (
             <li key={attr}>
               {attr} : {data}
             </li>
@@ -73,7 +88,7 @@ export function Details() {
             </tr>
           </thead>
           <tbody>
-            {pokemon.stats
+            {basicInformation.stats
               .slice()
               .sort((a, b) => a.stat.name.localeCompare(b.stat.name))
               .map(({ base_stat, stat: { name } }) => (
@@ -84,10 +99,10 @@ export function Details() {
               ))}
           </tbody>
         </Table>
-      </Col>
+        </Col>
 
-      <Col xs="5" className="content">
-        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <Col xs="5" className="content">
+        <img src={basicInformation.sprites.front_default} alt={basicInformation.name} />
       </Col>
     </Row>
   );

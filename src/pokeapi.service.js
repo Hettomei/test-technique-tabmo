@@ -10,6 +10,8 @@ function addPrice(pokemon) {
 export async function getAll() {
   // TODO : remove this if when goes in production
   if (process.env.NODE_ENV === "development") {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    await sleep(2000);
     return fakePokemons.results.map(addPrice);
   }
 
@@ -23,7 +25,11 @@ export async function getAll() {
 }
 
 export async function getPokemon(name) {
-  const request = await axios.get(`${BASE_URL}/pokemon/${name}`);
+  const requestBasicInformation = axios.get(`${BASE_URL}/pokemon/${name}`);
+  const requestSpecies = axios.get(`${BASE_URL}/pokemon-species/${name}`);
   // Merge request with species and color when this one is complete
-  return request.data;
+  return {
+    basicInformation: (await requestBasicInformation).data,
+    species: (await requestSpecies).data,
+  }
 }

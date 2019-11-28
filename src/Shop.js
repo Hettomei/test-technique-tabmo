@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
+import { Spinner } from "reactstrap";
 
 import { AddToCart } from "./AddToCart";
 
@@ -14,6 +15,15 @@ const selectPokemons = createSelector(
 
 export function Shop() {
   const pokemons = useSelector(selectPokemons);
+
+  if (pokemons.length === 0) {
+    return (
+      <div>
+        <h1>Pokemons</h1>
+        <Spinner color="primary" />
+      </div>
+    );
+  }
 
   return (
     <div>
