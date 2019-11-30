@@ -9,15 +9,27 @@
  *   "species": { // all agregatted data from pokeapi/species },
  * }
  */
+
+function addPokemonInfo(state, { basicInformation, species }) {
+  const newState = [...state];
+
+  const pokemonIndex = newState.findIndex(
+    ({ name }) => name === basicInformation.name
+  );
+
+  const pokemon = newState[pokemonIndex];
+  newState[pokemonIndex] = {
+    ...pokemon,
+    basicInformation: basicInformation,
+    species: species
+  };
+  return newState;
+}
+
 export function pokeapi(state = [], action) {
   switch (action.type) {
     case "add-pokemon-info": {
-      const { basicInformation, species } = action;
-      const newState = [...state];
-      const pokemon = newState.find(({name}) => name === basicInformation.name);
-      pokemon.basicInformation = basicInformation;
-      pokemon.species = species;
-      return newState;
+      return addPokemonInfo(state, action);
     }
     case "fetch all pokemons": {
       return [...action.pokemons];

@@ -6,8 +6,3 @@ const getOne = (pokemons, pokename) =>
   pokemons.find(pokemon => pokemon.name === pokename) || {};
 
 export const selectPokemon = createSelector(pokeapi, pokename, getOne);
-export const selectBasicInformation = createSelector(
-  pokeapi,
-  pokename,
-  (pokemons, pokename) => getOne(pokemons, pokename).basicInformation
-);

@@ -7,7 +7,7 @@ import { Row, Col, Table, Spinner } from "reactstrap";
 import { AddToCart } from "./AddToCart";
 
 import { getPokemon } from "./pokeapi.service";
-import { selectPokemon, selectBasicInformation } from "./selectors/pokeapi";
+import { selectPokemon } from "./selectors/pokeapi";
 
 const WHITE_LIST = [
   "base_experience",
@@ -32,7 +32,7 @@ export function Details() {
   const { pokename } = useParams();
   const dispatch = useDispatch();
   const pokemon = useSelector(state => selectPokemon(state, pokename));
-  const basicInformation = useSelector(state => selectBasicInformation(state, pokename));
+  const { basicInformation } = pokemon;
 
   async function fetchPokemon(pokename) {
     dispatch({
@@ -42,6 +42,8 @@ export function Details() {
   }
 
   useEffect(() => {
+    // first wait for pokemons to be downloaded, so pokename.name works
+    // then avoid downloaded when basicInformation are present
     pokemon.name && !basicInformation && fetchPokemon(pokename);
   });
 
