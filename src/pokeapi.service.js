@@ -30,6 +30,6 @@ export async function getPokemon(name) {
   // Merge request with species and color when this one is complete
   return {
     basicInformation: (await requestBasicInformation).data,
-    species: (await requestSpecies).data,
-  }
+    species: (await requestSpecies).data
+  };
 }

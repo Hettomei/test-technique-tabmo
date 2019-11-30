@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
-import { Row, Col, Badge } from "reactstrap";
+import { Col, Badge } from "reactstrap";
 
 const countTotal = (acc, prices) => acc + prices.length;
 const sumPrices = (acc, prices) => acc + prices.length * (prices[0] || 0);
@@ -23,7 +23,7 @@ export function Header() {
   const totalPrice = useSelector(selectTotalPriceInCart);
 
   return (
-    <Row>
+    <Fragment>
       <Col xs="10">
         <h1>Tabmo - Pokeshop</h1>
       </Col>
@@ -32,6 +32,6 @@ export function Header() {
           {totalInCart} pokemons, {totalPrice} €
         </Badge>
       </Col>
-    </Row>
+    </Fragment>
   );
 }

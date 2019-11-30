@@ -9,7 +9,7 @@ import { Page404 } from "./Page404";
 import { Header } from "./Header";
 import { MenuLinks } from "./MenuLinks";
 import { Shop } from "./Shop";
-import { Details } from "./Details";
+import { Details } from "./details/Details";
 import { Cart } from "./Cart";
 
 import { getAll } from "./pokeapi.service";
@@ -32,17 +32,15 @@ function App() {
     <Router>
       <Container fluid>
         <Row className="header">
-          <Col xs="12">
-            <Header />
-          </Col>
+          <Header />
         </Row>
 
         <Row>
-          <Col xs="3" className="menu">
+          <Col xs="2" className="menu">
             <MenuLinks />
           </Col>
 
-          <Col xs="9" className="content">
+          <Col xs="10" className="content">
             <Switch>
               <Route path="/" exact component={Shop} />
               <Route path={URLS.shop} exact component={Shop} />
