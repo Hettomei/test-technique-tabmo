@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { Spinner } from "reactstrap";
+import { Spinner, Table } from "reactstrap";
 
 import { AddToCart } from "./AddToCart";
 
@@ -28,15 +28,30 @@ export function Shop() {
   return (
     <div>
       <h1>Pokemons</h1>
-      {pokemons.map(pokemon => (
-        <ul key={pokemon.name}>
-          <li>
-            <Link to={`${URLS.details}/${pokemon.name}`}>{pokemon.name}</Link>
-          </li>
-          <li>{pokemon.price}</li>
-          <AddToCart pokemon={pokemon} />
-        </ul>
-      ))}
+      <Table stripped hover responsive>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>price</th>
+            <th>add to cart</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pokemons.map(pokemon => (
+            <tr key={pokemon.name}>
+              <td>
+                <Link to={`${URLS.details}/${pokemon.name}`}>
+                  {pokemon.name}
+                </Link>
+              </td>
+              <td>{pokemon.price}</td>
+              <td>
+                <AddToCart pokemon={pokemon} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
