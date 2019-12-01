@@ -1,31 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Spinner, Table } from "reactstrap";
+import { Form, FormGroup, Input } from "reactstrap";
 
 import { PaginationShop } from "./PaginationShop";
 import { AddToCart } from "./AddToCart";
 
 import { URLS, POKEMONS_PER_PAGE } from "./constants";
 
-const selectPokemons = page =>
-  createSelector(
-    state => state.pokeapi,
-    pokemons =>
-      pokemons.slice((page - 1) * POKEMONS_PER_PAGE, page * POKEMONS_PER_PAGE)
+const searchPokemons = search => state =>
+  state.pokeapi.filter(({ name }) => name.match(search));
+
+const selectDisaplayedPokemons = (page, search) =>
+  createSelector(searchPokemons(search), pokemons =>
+    pokemons.slice((page - 1) * POKEMONS_PER_PAGE, page * POKEMONS_PER_PAGE)
   );
 
-function sanitizePage({ page }) {
+function sanitizePage({ page }, maxPage) {
   const iPage = Math.abs(Math.ceil(Number(page)));
-  return iPage || 1;
+  return Math.min(iPage || 1, maxPage);
 }
 
 export function Shop() {
-  const page = sanitizePage(useParams());
-  const pokemons = useSelector(selectPokemons(page));
+  const [inputText, setInputText] = useState("");
 
-  if (pokemons.length === 0) {
+  const total = useSelector(state => state.pokeapi.length);
+  const totalSearch = useSelector(searchPokemons(inputText)).length;
+  const maxPage = Math.ceil(totalSearch / POKEMONS_PER_PAGE);
+  const page = sanitizePage(useParams(), maxPage);
+  const displayPokemons = useSelector(
+    selectDisaplayedPokemons(page, inputText)
+  );
+
+  if (total === 0) {
     return (
       <div>
         <h1>Pokemons</h1>
@@ -33,14 +42,22 @@ export function Shop() {
       </div>
     );
   }
-  console.log('ttiimm', 'render');
 
   return (
     <div>
-      <h1>Pokemons {page}</h1>
+      <h1>Pokemons</h1>
+      <Form>
+        <FormGroup>
+          <Input
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
+            placeholder="Search"
+          />
+        </FormGroup>
+      </Form>
 
       <PaginationShop
-        total={pokemons.length}
+        total={totalSearch}
         perPage={POKEMONS_PER_PAGE}
         page={page}
         url={`${URLS.shop}/page`}
@@ -55,7 +72,7 @@ export function Shop() {
           </tr>
         </thead>
         <tbody>
-          {pokemons.map(pokemon => (
+          {displayPokemons.map(pokemon => (
             <tr key={pokemon.name}>
               <td>
                 <Link to={`${URLS.details}/${pokemon.name}`}>
@@ -70,7 +87,12 @@ export function Shop() {
           ))}
         </tbody>
       </Table>
-      <PaginationShop />
+      <PaginationShop
+        total={totalSearch}
+        perPage={POKEMONS_PER_PAGE}
+        page={page}
+        url={`${URLS.shop}/page`}
+      />
     </div>
   );
 }

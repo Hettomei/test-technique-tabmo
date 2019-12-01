@@ -43,6 +43,9 @@ body {
   font-size: 1.3rem;
 }
 
-table.table td{
+table.table td {
   vertical-align: middle;
+}
+.pagination {
+  overflow: auto;
 }

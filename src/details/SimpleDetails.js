@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 
 export function SimpleDetails({ pokemon: { basicInformation, species } }) {
-  console.log(species.flavor_text_entries.find(o => o.language.name === 'fr').flavor_text);
-  // {species.flavor_text_entries.find(o => o.language.name === 'fr')}
   return (
     <Fragment>
       <h2>Types</h2>
