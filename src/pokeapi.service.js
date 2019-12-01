@@ -11,7 +11,7 @@ export async function getAll() {
   // TODO : remove this if when goes in production
   if (process.env.NODE_ENV === "development") {
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    await sleep(2000);
+    await sleep(0);
     return fakePokemons.results.map(addPrice);
   }
 

@@ -3,3 +3,5 @@ export const URLS = {
   details: "/details",
   cart: "/cart"
 };
+
+export const POKEMONS_PER_PAGE = 20;

@@ -44,6 +44,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={Shop} />
               <Route path={URLS.shop} exact component={Shop} />
+              <Route path={`${URLS.shop}/page/:page`} component={Shop} />
               <Route path={`${URLS.details}/:pokename`} component={Details} />
               <Route path={URLS.cart} exact component={Cart} />
               <Route component={Page404} />

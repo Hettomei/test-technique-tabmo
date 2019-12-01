@@ -1,20 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Spinner, Table } from "reactstrap";
 
+import { PaginationShop } from "./PaginationShop";
 import { AddToCart } from "./AddToCart";
 
-import { URLS } from "./constants";
+import { URLS, POKEMONS_PER_PAGE } from "./constants";
 
-const selectPokemons = createSelector(
-  state => state.pokeapi,
-  pokemons => pokemons.slice(0, 10)
-);
+const selectPokemons = page =>
+  createSelector(
+    state => state.pokeapi,
+    pokemons =>
+      pokemons.slice((page - 1) * POKEMONS_PER_PAGE, page * POKEMONS_PER_PAGE)
+  );
+
+function sanitizePage({ page }) {
+  const iPage = Math.abs(Math.ceil(Number(page)));
+  return iPage || 1;
+}
 
 export function Shop() {
-  const pokemons = useSelector(selectPokemons);
+  const page = sanitizePage(useParams());
+  const pokemons = useSelector(selectPokemons(page));
 
   if (pokemons.length === 0) {
     return (
@@ -24,11 +33,20 @@ export function Shop() {
       </div>
     );
   }
+  console.log('ttiimm', 'render');
 
   return (
     <div>
-      <h1>Pokemons</h1>
-      <Table stripped hover responsive>
+      <h1>Pokemons {page}</h1>
+
+      <PaginationShop
+        total={pokemons.length}
+        perPage={POKEMONS_PER_PAGE}
+        page={page}
+        url={`${URLS.shop}/page`}
+      />
+
+      <Table hover responsive>
         <thead>
           <tr>
             <th>name</th>
@@ -52,6 +70,7 @@ export function Shop() {
           ))}
         </tbody>
       </Table>
+      <PaginationShop />
     </div>
   );
 }
