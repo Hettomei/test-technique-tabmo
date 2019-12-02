@@ -20,17 +20,17 @@ export function Details() {
   const pokemon = useSelector(state => selectPokemon(state, pokename));
   const { basicInformation, species } = pokemon;
 
-  async function fetchPokemon(pokename) {
+  async function fetchPokemon(pokemon) {
     dispatch({
       type: "add-pokemon-info",
-      ...(await getPokemon(pokename))
+      ...(await getPokemon(pokemon))
     });
   }
 
   useEffect(() => {
-    // first wait for pokemons to be downloaded, so pokename.name works
+    // first wait for pokemons to be downloaded, so pokemon.name works
     // then avoid downloaded when basicInformation are present
-    pokemon.name && !basicInformation && fetchPokemon(pokename);
+    pokemon.name && !basicInformation && fetchPokemon(pokemon);
   });
 
   if (!basicInformation) {

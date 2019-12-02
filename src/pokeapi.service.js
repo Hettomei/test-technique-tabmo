@@ -24,12 +24,12 @@ export async function getAll() {
   return request.data.results.map(addPrice);
 }
 
-export async function getPokemon(name) {
-  const requestBasicInformation = axios.get(`${BASE_URL}/pokemon/${name}`);
-  const requestSpecies = axios.get(`${BASE_URL}/pokemon-species/${name}`);
-  // Merge request with species and color when this one is complete
+export async function getPokemon({ url }) {
+  const id = url.match(/\/(\d+)\/$/)[1];
+  const basicInformation = (await axios.get(`${BASE_URL}/pokemon/${id}`)).data;
+  const species = (await axios.get(basicInformation.species.url)).data;
   return {
-    basicInformation: (await requestBasicInformation).data,
-    species: (await requestSpecies).data
+    basicInformation,
+    species
   };
 }
