@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
 import { Spinner, Table } from "reactstrap";
 import { Form, FormGroup, Input } from "reactstrap";
 
@@ -9,14 +8,11 @@ import { PaginationShop } from "./PaginationShop";
 import { AddToCart } from "./AddToCart";
 
 import { URLS, POKEMONS_PER_PAGE } from "./constants";
-
-const searchPokemons = search => state =>
-  state.pokeapi.filter(({ name }) => name.match(search));
-
-const selectDisaplayedPokemons = (page, search) =>
-  createSelector(searchPokemons(search), pokemons =>
-    pokemons.slice((page - 1) * POKEMONS_PER_PAGE, page * POKEMONS_PER_PAGE)
-  );
+import {
+  selectTotal,
+  searchPokemons,
+  selectPaginatedPokemons
+} from "./selectors/pokeapi";
 
 function sanitizePage({ page }, maxPage) {
   const iPage = Math.abs(Math.ceil(Number(page)));
@@ -26,12 +22,14 @@ function sanitizePage({ page }, maxPage) {
 export function Shop() {
   const [inputText, setInputText] = useState("");
 
-  const total = useSelector(state => state.pokeapi.length);
-  const totalSearch = useSelector(searchPokemons(inputText)).length;
-  const maxPage = Math.ceil(totalSearch / POKEMONS_PER_PAGE);
+  const total = useSelector(selectTotal);
+  const totalSearch = useSelector(state => searchPokemons(state, inputText));
+
+  const maxPage = Math.ceil(totalSearch.length / POKEMONS_PER_PAGE);
   const page = sanitizePage(useParams(), maxPage);
-  const displayPokemons = useSelector(
-    selectDisaplayedPokemons(page, inputText)
+
+  const displayPokemons = useSelector(state =>
+    selectPaginatedPokemons(state, inputText, page)
   );
 
   if (total === 0) {
@@ -57,7 +55,7 @@ export function Shop() {
       </Form>
 
       <PaginationShop
-        total={totalSearch}
+        total={totalSearch.length}
         perPage={POKEMONS_PER_PAGE}
         page={page}
         url={`${URLS.shop}/page`}
@@ -88,7 +86,7 @@ export function Shop() {
         </tbody>
       </Table>
       <PaginationShop
-        total={totalSearch}
+        total={totalSearch.length}
         perPage={POKEMONS_PER_PAGE}
         page={page}
         url={`${URLS.shop}/page`}

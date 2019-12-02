@@ -1,25 +1,11 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
-
 import { Col, Badge } from "reactstrap";
 
-const countTotal = (acc, prices) => acc + prices.length;
-const sumPrices = (acc, prices) => acc + prices.length * (prices[0] || 0);
-
-const selectTotalInCart = createSelector(
-  state => state.cart,
-  cart => Object.values(cart).reduce(countTotal, 0)
-);
-
-const selectTotalPriceInCart = createSelector(
-  state => state.cart,
-  state => state.pokeapi,
-  (cart, pokemons) => Object.values(cart).reduce(sumPrices, 0)
-);
+import { selectTotalPokemon, selectTotalPriceInCart } from "./selectors/cart";
 
 export function Header() {
-  const totalInCart = useSelector(selectTotalInCart);
+  const totalPokemon = useSelector(selectTotalPokemon);
   const totalPrice = useSelector(selectTotalPriceInCart);
 
   return (
@@ -29,7 +15,7 @@ export function Header() {
       </Col>
       <Col xs="2">
         <Badge color="primary" pill>
-          {totalInCart} pokemons, {totalPrice} €
+          {totalPokemon} pokemons, {totalPrice} €
         </Badge>
       </Col>
     </Fragment>

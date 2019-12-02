@@ -1,16 +1,37 @@
 import React from "react";
 import { mount } from "enzyme";
 import { Provider } from "react-redux";
-
-import { buildStore } from "./configureStore";
+import configureStore from "redux-mock-store";
 
 import { Header } from "./Header";
+const mockStore = configureStore([]);
 
-it("renders without crashing", () => {
-  const cart = mount(
-    <Provider store={buildStore()}>
-      <Header />
-    </Provider>
-  );
-  expect(cart).toBeTruthy();
+describe("Header", () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore({
+      cart: {
+        poke1: [1, 20, 300],
+        poke2: [4000]
+      }
+    });
+  });
+
+  it("renders without crashing", () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <Header />
+      </Provider>
+    );
+    expect(wrapper).toBeTruthy();
+  });
+
+  it("display number and price", () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <Header />
+      </Provider>
+    );
+    expect(wrapper.text()).toMatch("4 pokemons, 4321 €");
+  });
 });
