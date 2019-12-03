@@ -6,26 +6,23 @@ import { makeSelectNumberOfPokemonsPerName } from "./selectors/cart";
 
 export function AddToCart({ pokemon }) {
   const dispatch = useDispatch();
-  const selectNumberOfPokemonsPerName = useMemo(makeSelectNumberOfPokemonsPerName, [pokemon]);
+  const selectNumberOfPokemonsPerName = useMemo(makeSelectNumberOfPokemonsPerName, []);
   const count = useSelector(state =>
     selectNumberOfPokemonsPerName(state, pokemon)
   );
 
-  const addToCart = pokemon => event =>
-    dispatch({ type: "add-pokemon", pokemon });
-
-  const removeFromCart = pokemon => event =>
-    dispatch({ type: "remove-pokemon", pokemon });
+  const addToCart = event => dispatch({ type: "add-pokemon", pokemon });
+  const removeFromCart = event => dispatch({ type: "remove-pokemon", pokemon });
 
   return (
     <div className="add-to-cart">
-      <Button color="info" onClick={removeFromCart(pokemon)}>
+      <Button color="info" onClick={removeFromCart}>
         -
       </Button>
       <Badge color="" pill>
         {count}
       </Badge>
-      <Button color="info" onClick={addToCart(pokemon)}>
+      <Button color="info" onClick={addToCart}>
         +
       </Button>
     </div>
