@@ -31,7 +31,7 @@ export function pokeapi(state = [], action) {
     case "add-pokemon-info": {
       return addPokemonInfo(state, action);
     }
-    case "fetch all pokemons": {
+    case "fetch-all-pokemons": {
       return [...action.pokemons];
     }
     default:

@@ -21,7 +21,7 @@ function App() {
 
   async function fetchPokemons() {
     const pokemons = await getAll();
-    dispatch({ type: "fetch all pokemons", pokemons });
+    dispatch({ type: "fetch-all-pokemons", pokemons });
   }
 
   useEffect(() => {
