@@ -6,7 +6,10 @@ import { makeSelectNumberOfPokemonsPerName } from "./selectors/cart";
 
 export function AddToCart({ pokemon }) {
   const dispatch = useDispatch();
-  const selectNumberOfPokemonsPerName = useMemo(makeSelectNumberOfPokemonsPerName, []);
+  const selectNumberOfPokemonsPerName = useMemo(
+    makeSelectNumberOfPokemonsPerName,
+    []
+  );
   const count = useSelector(state =>
     selectNumberOfPokemonsPerName(state, pokemon)
   );

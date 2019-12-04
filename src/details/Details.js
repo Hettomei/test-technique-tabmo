@@ -14,6 +14,14 @@ import { SimpleDetails } from "./SimpleDetails";
 import { Stats } from "./Stats";
 import { Sprites } from "./Sprites";
 
+function getFrenchName({ name, species }) {
+  const frName = species.names.find(
+    ({ language }) => language.name === "fr"
+  );
+
+  return frName ? frName.name : name;
+}
+
 export function Details() {
   const { pokename } = useParams();
   const dispatch = useDispatch();
@@ -41,8 +49,13 @@ export function Details() {
     <Fragment>
       <Row className="pokemon-detail-head">
         <Col sm="8" xs="12">
-          <h1>{pokemon.name.toUpperCase()}</h1>
-          <p>{species.flavor_text_entries.find(o => o.language.name === 'fr').flavor_text}</p>
+          <h1>{getFrenchName(pokemon)}</h1>
+          <p>
+            {
+              species.flavor_text_entries.find(o => o.language.name === "fr")
+                .flavor_text
+            }
+          </p>
         </Col>
 
         <Col sm="4" xs="12" className="content">

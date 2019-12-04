@@ -6,7 +6,7 @@ export function Loading({ pokename }) {
     <Fragment>
       <Row className="pokemon-detail-head">
         <Col xs="9">
-          <h1 className="pokemon-name">{pokename.toUpperCase()}</h1>
+          <h1 className="pokemon-name">{pokename}</h1>
         </Col>
       </Row>
 
