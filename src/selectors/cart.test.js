@@ -20,6 +20,10 @@ describe("selectors/cart", () => {
       expect(selector.selectTotalPriceInCart(store)).toEqual(5321);
       expect(selector.selectTotalPriceInCart({ cart: {} })).toEqual(0);
     });
+
+    it("when has empty array, return a number", () => {
+      expect(selector.selectTotalPriceInCart({ cart: { bulbi: [], pika: [50]} })).toEqual(50);
+    });
   });
 
   describe("makeSelectNumberOfPokemonsPerName", () => {

@@ -4,7 +4,7 @@ import { selectPokemon } from "./pokeapi";
 
 const countTotal = (acc, prices) => acc + prices.length;
 const sum = (acc, prices) =>
-  prices.length ? acc + prices.reduce(sum, 0) : acc + prices;
+  Array.isArray(prices) ? acc + prices.reduce(sum, 0) : acc + prices;
 
 export const selectTotalPokemon = createSelector(
   state => state.cart,
