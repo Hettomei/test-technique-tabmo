@@ -1,6 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 import configureStore from "redux-mock-store";
 
 import { Header } from "./Header";
@@ -20,7 +21,9 @@ describe("Header", () => {
   it("renders without crashing", () => {
     const wrapper = mount(
       <Provider store={store}>
-        <Header />
+        <Router>
+          <Header />
+        </Router>
       </Provider>
     );
     expect(wrapper).toBeTruthy();
@@ -29,7 +32,9 @@ describe("Header", () => {
   it("display number and price", () => {
     const wrapper = mount(
       <Provider store={store}>
-        <Header />
+        <Router>
+          <Header />
+        </Router>
       </Provider>
     );
     expect(wrapper.text()).toMatch("4 pokemons, 4321 €");

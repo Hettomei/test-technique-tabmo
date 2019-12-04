@@ -36,11 +36,11 @@ function App() {
         </Row>
 
         <Row>
-          <Col xs="2" className="menu">
+          <Col sm="3" xs="12" className="menu">
             <MenuLinks />
           </Col>
 
-          <Col xs="10" className="content">
+          <Col sm="9" xs="12" className="content">
             <Switch>
               <Route path="/" exact component={Shop} />
               <Route path={URLS.shop} exact component={Shop} />

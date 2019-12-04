@@ -2,10 +2,6 @@ body {
   background-color: #f9f9f9;
 }
 
-.shop-nav {
-  min-height: 500px;
-}
-
 .shop-nav ul {
   margin: 1rem;
 }
@@ -20,6 +16,10 @@ body {
 
 .header .badge {
   margin: 1rem;
+}
+
+.header .badge a {
+  color: white;
 }
 
 .menu {

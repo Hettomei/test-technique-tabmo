@@ -40,24 +40,21 @@ export function Details() {
   return (
     <Fragment>
       <Row className="pokemon-detail-head">
-        <Col xs="8">
+        <Col sm="8" xs="12">
           <h1>{pokemon.name.toUpperCase()}</h1>
           <p>{species.flavor_text_entries.find(o => o.language.name === 'fr').flavor_text}</p>
         </Col>
 
-        <Col xs="4" className="content">
+        <Col sm="4" xs="12" className="content">
           <AddToCart pokemon={pokemon} />
           <Sprites sprites={basicInformation.sprites} name={pokemon.name} />
         </Col>
       </Row>
 
       <Row>
-        <Col xs="8">
+        <Col xs="12">
           <SimpleDetails pokemon={pokemon} />
           <Stats pokemon={pokemon} />
-        </Col>
-
-        <Col xs="4" className="content">
         </Col>
       </Row>
     </Fragment>
