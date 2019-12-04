@@ -33,4 +33,26 @@ describe("selectors/cart", () => {
       ).toEqual(0);
     });
   });
+
+  describe("cartToSortedArray", () => {
+    it("return an array", () => {
+      const store = {
+        cart: {
+          zzzz: [100],
+          aaa: [5000],
+          zzz: [100]
+        },
+        pokeapi: [
+          { name: "zzz", price: 1 },
+          { name: "zzzz", price: 20 },
+          { name: "aaa", price: 300 }
+        ]
+      };
+      expect(selector.cartToSortedArray(store)).toEqual([
+        { name: "aaa", price: 300 },
+        { name: "zzz", price: 1 },
+        { name: "zzzz", price: 20 }
+      ]);
+    });
+  });
 });
