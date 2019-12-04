@@ -10,6 +10,18 @@ import { cartToSortedArray } from "./selectors/cart";
 export function Cart() {
   const pokemonsInCart = useSelector(cartToSortedArray);
 
+  if (!pokemonsInCart.length) {
+    return (
+      <div>
+        <h1>My cart</h1>
+        <p>
+          Your cart is empty. Give a try to our brand new
+          <Link to={URLS.shop}> Shop</Link>
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>My cart</h1>
