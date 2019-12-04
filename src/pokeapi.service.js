@@ -1,5 +1,4 @@
 import axios from "axios";
-import fakePokemons from "./fakeData/pokemons.json";
 
 const BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -8,13 +7,6 @@ function addPrice(pokemon) {
 }
 
 export async function getAll() {
-  // TODO : remove this if when goes in production
-  if (process.env.NODE_ENV === "development") {
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    await sleep(0);
-    return fakePokemons.results.map(addPrice);
-  }
-
   const request = await axios.get(`${BASE_URL}/pokemon`, {
     params: {
       offset: 0,

@@ -23,7 +23,7 @@ Open http://localhost:3000 to view it in the browser.
 # Choices
 
 ## Axios :
-Because in case of 404, it throw an error. Fetch doesn't, we have t check status.
+Because in case of 404, it throw an error. Fetch doesn't, we have to check status.
 
 ## reactstrap :
 bootstrap is known since lot of year
